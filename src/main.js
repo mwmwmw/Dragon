@@ -1,6 +1,7 @@
 import Memo from "memo";
 
 const DRAG_OVER_CLASS = "dragover";
+const DROPPED = "dropped";
 
 export default class Dragon extends Memo {
 	constructor({target = null}) {
@@ -37,10 +38,13 @@ export default class Dragon extends Memo {
 			this.files = e.dataTransfer.files;
 		}
 		this.trigger("filesReceived", this.files);
+		this.target.classList.remove(DRAG_OVER_CLASS);
+		this.target.classList.add(DROPPED);
 	}
 	handleDragOver(e) {
 		e.preventDefault();
 		this.trigger("dragover", e);
+		this.target.classList.remove(DROPPED);
 		this.target.classList.add(DRAG_OVER_CLASS);
 	}
 	handleDragLeave(e) {
